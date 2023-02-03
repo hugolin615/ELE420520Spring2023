@@ -1,0 +1,5 @@
+*.pyc
+backup/
+Backup/
+*.mat
+.vagrant
