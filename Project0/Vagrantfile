@@ -1,6 +1,19 @@
+
+
 Vagrant.configure("2") do |config|
   config.vm.box = "hugolin615/ELE420"
   config.vm.box_version = "1.0"
+  config.vm.synced_folder '.', '/vagrant', disabled: true
+  config.vm.allow_fstab_modification = false
+  config.vm.allow_hosts_modification = false
+  
+  #if Vagrant.has_plugin?("vagrant-vbguest") then
+  #  config.vbguest.auto_update = false
+  #end
+  
+  #config.ssh.insert_key = false
+  config.ssh.username = "ele420"
+  config.ssh.password = "ele420"
   
   config.vm.provider "virtualbox" do |v|
 	v.name = "ELE420520" + Time.now.strftime(" %Y-%m-%d")
@@ -12,4 +25,5 @@ Vagrant.configure("2") do |config|
     vb.cpus = 2
     vb.customize ["modifyvm", :id, "--vram", "32"]
   end
+  
 end
