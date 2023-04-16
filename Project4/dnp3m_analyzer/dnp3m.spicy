@@ -1,0 +1,27 @@
+module DNP3M;
+
+import spicy;
+
+public type Packet = unit {      
+    opcode:   uint8;
+    length:   uint8;
+    switch ( self.opcode ) {
+        1  -> req: Request  (self.length - 2);
+        11 -> res: Response (self.length -2 );
+    };
+
+    on %done { print self; }
+};
+
+type Request = unit (sub_len: uint8) {
+    index: uint8[];
+} &size = sub_len;
+
+type Response = unit (sub_len: uint8) {
+    all_data: Data[];
+} &size = sub_len;
+
+type Data = unit {
+    index: uint8;
+    measure: real &byte-order=spicy::ByteOrder::Little &type = spicy::RealType::IEEE754_Single ;
+};
