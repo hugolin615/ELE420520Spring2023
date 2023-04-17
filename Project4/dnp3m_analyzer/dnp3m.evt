@@ -1,0 +1,9 @@
+protocol analyzer spicy::DNP3M over TCP:
+    parse with DNP3M::Packet,
+    ports { 20000/tcp, 20001/tcp, 20002/tcp, 20003/tcp, 20004/tcp};
+
+import DNP3M;
+
+on DNP3M::Request  -> event dnp3m::request($conn, $is_orig, self.index);
+on DNP3M::Response  -> event dnp3m::response($conn, $is_orig);
+on DNP3M::Data -> event dnp3m::data($conn, $is_orig, self.index, self.measure);
